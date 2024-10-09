@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ATM Application</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        margin: 0;
+        padding: 0;
+      }
+      .container {
+        width: 500px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .container h1 {
+        text-align: center;
+      }
+      .container input,
+      .container button {
+        width: 95%;
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+      .container button {
+        width: 50%;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+      }
+      .container button:hover {
+        background-color: #45a049;
+      }
+      .message {
+        text-align: center;
+        color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>ATM Application</h1>
+      <div id="form">
+        <input type="text" id="email" placeholder="Email" />
+        <input type="password" id="password" placeholder="Password" />
+        <button onclick="controller.login()">Login</button>
+      </div>
+      <div class="message" id="message"></div>
+    </div>
+    <script>
+      // Model
+      class Account {
+        constructor(email, password, amount, customerName) {
+          this.email = email;
+          this.password = password;
+          this.amount = amount;
+          this.customerName = customerName;
+        }
+
+        checkLogin(email, pass) {
+          return email == this.email && pass === this.password;
+        }
+      }
+
+      // View
+      class View {
+        displayLogin() {
+          document.getElementById("form").innerHTML = `
+                    <input type="text" id="accountNo" placeholder="Account Number">
+                    <input type="password" id="password" placeholder="Password">
+                    <button onclick="controller.login()">Login</button>
+                `;
+        }
+
+        displayMessage(message) {
+          document.getElementById("message").innerText = message;
+        }
+      }
+
+      // Controller
+      class Controller {
+        constructor(model, view) {
+          this.model = model;
+          this.view = view;
+        }
+
+        displayLogin() {
+          this.view.displayLogin();
+        }
+
+        login() {
+          const email = document.getElementById("email").value;
+          const pass = document.getElementById("password").value;
+
+          // Kiểm tra email có ký tự @
+          if (!email.includes("@")) {
+            this.view.displayMessage("Email phải có ký tự @");
+            return;
+          }
+
+          // Kiểm tra password có tối đa 8 ký tự
+          if (pass.length > 8) {
+            this.view.displayMessage("Password tối đa 8 ký tự");
+            return;
+          }
+
+          // Xác nhận thông tin và cám ơn user
+          if (this.model.account.checkLogin(email, pass)) {
+            const message = document.getElementById("message");
+            message.style.color = "green";
+            message.innerText = "Login thành công! Cảm ơn bạn đã đăng nhập.";
+          } else {
+            this.view.displayMessage(
+              "Login thất bại. Vui lòng kiểm tra lại thông tin."
+            );
+          }
+        }
+      }
+
+      // Initialize
+      const account = new Account(
+        "2115208@example.com",
+        "abcd1234",
+        1000.0,
+        "Le Trung Hoa Hieu"
+      );
+      const model = { account };
+      const view = new View();
+      const controller = new Controller(model, view);
+    </script>
+  </body>
+</html>

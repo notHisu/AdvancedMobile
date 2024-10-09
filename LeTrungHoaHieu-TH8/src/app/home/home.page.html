@@ -1,0 +1,17 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Hệ thống ATM</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div>
+    <p>-- Tài khoản: {{ account?.username }} --</p>
+    <ion-button (click)="viewAccountDetails()">
+      1. Xem thông tin tài khoản
+    </ion-button>
+    <ion-button (click)="takePhoto()"> 2. Chụp hình </ion-button>
+    <ion-button (click)="showMap()"> 3. Xem vị trí </ion-button>
+    <ion-button (click)="logout()"> 4. Thoát </ion-button>
+  </div>
+</ion-content>

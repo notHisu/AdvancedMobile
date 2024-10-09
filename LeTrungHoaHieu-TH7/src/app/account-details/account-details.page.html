@@ -1,0 +1,16 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Hệ thống ATM</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div *ngIf="account; else loading">
+    <p>-- Tài khoản: {{ account.username }} --</p>
+    <p>-- Chi tiết --</p>
+    <p>Số tiền còn lại: {{ account.balance }}</p>
+  </div>
+  <ng-template #loading>
+    <p>Loading account details...</p>
+  </ng-template>
+</ion-content>
